@@ -57,17 +57,16 @@ class Borrow(models.Model):
     email = models.EmailField(blank=False, null=False)
     birth_date = models.DateField(blank=False, null=False)
     termin = models.PositiveSmallIntegerField(
-        max_length = 2, 
         choices = [
-            (3, 3),
-            (5, 5),
-            (10, 10),
-            (15, 15),
-            (30, 30),
-            (45, 45),
-            (60, 60),
-            (75, 75),
-            (90, 90)
+            (3, '3 дні'),
+            (5, '5 днів'),
+            (10, '10 днів'),
+            (15, '15 днів'),
+            (30, '30 днів'),
+            (45, '45 днів'),
+            (60, '60 днів'),
+            (75, '75 днів'),
+            (90, '90 днів')
         ],
         default = 30
         )
