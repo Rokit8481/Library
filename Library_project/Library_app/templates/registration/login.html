@@ -17,3 +17,13 @@
     {% block content %}
     <div class="w-50 border p-4 rounded shadow-sm">
       <h2 class="mb-4 text-center">Вхід</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-primary w-100 mt-3">Вхід</button>
+      </form>
+    </div>
+    {% endblock %}
+  </div>
+</body>
+</html>

@@ -12,7 +12,7 @@
         <a class="navbar-brand" href="{% url 'library' %}">Бібліотека</a>
         <div class="ms-auto">
           {% if user.is_authenticated %}
-            <a href="{% url 'library' %}">Мої книги</a> |
+            <a href="{% url 'my_borrows' %}">Мої книги</a> |
             <form method="post" action="{% url 'logout' %}" style="display: inline;">
               {% csrf_token %}
               <button type="submit" class="btn btn-sm btn-outline-danger">Вийти</button>

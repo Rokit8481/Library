@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %} Взяти книгу "{{ book.title }}"" {% endblock %}
+
+{% block content %}
+
+<a href="{% url 'book_detail' book.pk %}" class="btn btn-secondary mb-3">Назад до продукту</a>
+<div class="card" style="width: 50%;">
+  <div class="card-body">
+    <h5>Взяти книгу: <i><strong>"{{ book.title }}"</strong></i></h5>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Завершити</button>
+    </form>
+  </div>
+</div>
+</div>
+{% endblock %}

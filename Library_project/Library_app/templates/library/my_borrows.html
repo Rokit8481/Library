@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Мої Книги{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Мої Взяття Книг</h1>
+<div class="container">
+    <ul class="list-group">
+        {% for borrow in borrows %}
+            <li class="list-group-item">
+                <strong>{{ borrow.book.title }}</strong> - Взято: {{ borrow.created_at|date:"Y-m-d" }}
+                <br>
+                Email: {{ borrow.email }} | Дата народження: {{ borrow.birth_date }}
+                <br>
+                Термін: {{ borrow.termin }} {{borrow.termin_word}}
+                <br>
+                Залишилось днів: {% if borrow.days_left <= 0 %}
+                    <span class="text-danger">Прострочено</span>
+                {% else %}
+                    <span class="text-success">{{ borrow.days_left }} {{ borrow.days_left_word }}</span>
+                {% endif %}
+                <form action="{% url 'cancel_borrow' borrow.pk %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-success btn-sm">Скасувати бронювання</button>
+                </form>
+            </li>
+        {% empty %}
+            <li class="list-group-item">У вас немає взятих книг.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Редагувати взяття{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'my_borrows' %}" class="btn btn-secondary mb-3">Назад до моїх позичень</a>
+<div class="card" style="width: 50%;">
+    <div class="card-body">
+        <h5>Редагувати взяття книги: <i><strong>"{{ borrow.book.title }}"</strong></i></h5>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

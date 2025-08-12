@@ -8,25 +8,25 @@
 
   {% for book in books %}
     <div class="card mb-4 shadow-sm">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img src="{{ book.cover.url }}" alt="{{ book.title }}" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
+      <div class="row g-1">
+        <div class="col-md-3 col-lg-2">
+          <img src="{{ book.cover.url }}" alt="{{ book.title }}" class="w-100">
         </div>
             <div class="col-md-8">
             <div class="card-body">
-            <h5 class="card-title"> {{ book.title }}</h5>
-            <p class="card-text mb-1">isbn: {{ book.isbn|default:"Не вказано" }}</p>
-            <p class="mb-1">Автор: <strong>{{ book.author.first_name }} {{ book.author.last_name }}</strong></p>
-            <p class="mb-1">Рік публікування: <strong>{{ book.year_published }}</strong></p>
-            <p class="mb-1">Вікові обмеження: <strong>{{ book.age_restrictions }}+</strong></p>
-            <p class="mb-1">Жанри:
+            <h4 class="card-title"><i> "{{ book.title }}" </i></h4>
+            <p class="card-text mb-1"><strong>ISBN: </strong>{{ book.isbn|default:"Не вказано" }}</p>
+            <p class="mb-1"><strong>Автор: </strong> <a href="{% url 'author_detail' book.author.pk %}">{{ book.author.first_name }} {{ book.author.last_name }}</a></p>
+            <p class="mb-1"><strong>Рік публікування: </strong>{{ book.year_published }}</p>
+            <p class="mb-1"><strong>Вікові обмеження: </strong>{{ book.age_restrictions }}+</p>
+            <p class="mb-1"><strong>Жанри:</strong>
               {% for genre in book.genre.all %}
-                <strong>{{ genre.name }}</strong>{% if not forloop.last %}, {% endif %}
+                <a href="{% url 'genre_books' genre.pk %}" class = "text-muted">{{ genre.name }}</a>{% if not forloop.last %}, {% endif %}
               {% empty %}
                 <em>Не вказано</em>
               {% endfor %}
             </p>
-            <a href="{% url 'book_detail' book.pk %}" class="btn btn-sm btn-outline-primary">Більше...</a>
+            <a href="{% url 'book_detail' book.pk %}" class="btn btn-xxl btn-outline-primary">Більше...</a>
           </div>
         </div>
       </div>
@@ -36,3 +36,4 @@
   {% endfor %}
 </div>
 {% endblock %}
+

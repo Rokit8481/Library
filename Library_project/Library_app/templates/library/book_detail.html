@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %} Книга: {{book.title}} {% endblock %}
+
+{% block content%}
+        <div class="container mt-4" style="max-width: 900px;">
+            <div class="row g-4 align-items-start">
+                
+                <div class="col-md-4 text-center">
+                    <img src="{{ book.cover.url }}" alt="{{ book.title }}" class="img-fluid rounded shadow">
+                </div>
+                
+                <div class="col-md-8">
+                    <h2 class="mb-3"><i>"{{ book.title }}"</i></h2>
+                    <p class="fs-5"><strong>Автор: </strong> <a href="{% url 'author_detail' book.author.pk %}">{{ book.author.first_name }} {{ book.author.last_name }}</a></p>
+                    <p class="fs-5"><strong>ISBN:</strong> {{ book.isbn }}</p>
+                    <p class="fs-5"><strong>Випущена:</strong> {{ book.year_published }} рік</p>
+                    <p class="fs-5"><strong>Вікові обмеження:</strong> {{ book.age_restrictions }}+</p>
+
+                    {% if book.available %}
+                        <p class="fs-5 text-success">🟢 Доступно</p>
+                    {% else %}
+                        <p class="fs-5 text-danger">🔴 Недоступно</p>
+                    {% endif %}
+
+                    <p class="fs-5"><strong>Жанри:</strong>
+                        {% for genre in book.genre.all %}
+                            <a href="{% url 'genre_books' genre.pk %}" class="text-muted">{{ genre.name }}</a>{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            <em>Не вказано</em>
+                        {% endfor %}
+                    </p>
+
+                    <div class="mt-4">
+                        <a href="{% url 'borrow_book' book.pk %}" class="btn btn-lg btn-outline-primary">Взяти книгу</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+{% endblock %}

@@ -15,6 +15,7 @@ class Genre(models.Model):
 class Author(models.Model):
     first_name = models.CharField(max_length = 200)
     last_name = models.CharField(max_length = 200)
+    biography = models.CharField(max_length = 800, blank = True, null = True, default = "Біографія відсутня")
     photo = models.ImageField(upload_to = 'media/')
     birth_date = models.DateField(blank = False, null = False)
     death_date = models.DateField(blank = True, null = True, default = None)
