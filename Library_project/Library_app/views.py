@@ -7,11 +7,19 @@ from django.http import HttpRequest
 from .forms import BorrowForm
 from datetime import date, timedelta
 
-def library(request: HttpRequest):
-    books = Book.objects.filter(available = True)
+def library(request):
+    genres = Genre.objects.all()
+    selected_genres = request.GET.getlist('genre')
+
+    if selected_genres:
+        books = Book.objects.filter(genre__id__in=selected_genres).distinct()
+    else:
+        books = Book.objects.all()
 
     return render(request, 'library/library.html', {
-        'books': books
+        'genres': genres,
+        'books': books,
+        'selected_genres': selected_genres
     })
 
 def book_detail(request: HttpRequest, pk: int):
@@ -61,12 +69,18 @@ def my_borrows(request: HttpRequest):
 
 @login_required
 def edit_borrow(request: HttpRequest, pk: int):
-    borrow = get_object_or_404(Borrow, pk=pk)
+    borrow = get_object_or_404(Borrow, pk=pk, user=request.user)
 
     if request.method == 'POST':
         form = BorrowForm(request.POST, instance=borrow)
         if form.is_valid():
-            form.save()
+            updated_borrow = form.save(commit=False)
+
+            for field in form.fields:
+                if form.cleaned_data.get(field) in [None, '']:
+                    setattr(updated_borrow, field, getattr(borrow, field))
+
+            updated_borrow.save()
             return redirect('my_borrows')
     else:
         form = BorrowForm(instance=borrow)
@@ -92,9 +106,6 @@ def author_detail(request: HttpRequest, pk: int):
         'author': author,
         'books': books
     })
-
-def genre_books(request: HttpRequest):
-    pass
 
 def login_view(request: HttpRequest):
     form = AuthenticationForm(request, data=request.POST or None)

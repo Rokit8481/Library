@@ -9,7 +9,6 @@ urlpatterns = [
     path('borrow/<int:pk>/edit', views.edit_borrow, name = 'edit_borrow'),
     path('borrow/<int:pk>/cancel', views.cancel_borrow, name = 'cancel_borrow'),
     path('author/<int:pk>/', views.author_detail, name = 'author_detail'),
-    path('genre/<int:pk>/books', views.genre_books, name = 'genre_books'),
     path('accounts/login/', views.login_view, name='login'),
     path('accounts/logout/', views.logout_view, name='logout'),
     path('register/', views.register, name='register'),

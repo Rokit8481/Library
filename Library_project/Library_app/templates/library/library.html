@@ -3,8 +3,24 @@
 {% block title %}Бібліотека{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-  <h2 class="mb-3">Бібліотека</h2>
+<form id="genre-filter" class="d-flex flex-wrap gap-1">
+  {% for genre in genres %}
+      <input type="checkbox"
+             class="btn-check"
+             id="genre-{{ genre.id }}"
+             name="genre"
+             value="{{ genre.id }}"
+             {% if genre.id|stringformat:"s" in selected_genres %}checked{% endif %}
+             onchange="document.getElementById('genre-filter').submit()">
+      <label class="btn btn-outline-primary" for="genre-{{ genre.id }}">
+          {{ genre.name }}
+      </label>
+  {% endfor %}
+
+  {% if selected_genres %}
+      <a href="{% url 'library' %}" class="btn btn-outline-danger ms-2">Скинути</a>
+  {% endif %}
+</form>
 
   {% for book in books %}
     <div class="card mb-4 shadow-sm">
@@ -21,7 +37,7 @@
             <p class="mb-1"><strong>Вікові обмеження: </strong>{{ book.age_restrictions }}+</p>
             <p class="mb-1"><strong>Жанри:</strong>
               {% for genre in book.genre.all %}
-                <a href="{% url 'genre_books' genre.pk %}" class = "text-muted">{{ genre.name }}</a>{% if not forloop.last %}, {% endif %}
+                <strong class = "text-muted">{{ genre.name }}</strong>{% if not forloop.last %}, {% endif %}
               {% empty %}
                 <em>Не вказано</em>
               {% endfor %}

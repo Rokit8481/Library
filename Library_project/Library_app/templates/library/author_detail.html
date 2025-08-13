@@ -22,7 +22,7 @@
               <p class = "text-muted">{{ author.biography }}</p> 
             <p class="mb-1"><strong>Жанри:</strong>
                 {% for genre in author.genre.all %}
-                  <a href="{% url 'genre_books' genre.pk %}" class="text-muted">{{ genre.name }}</a>{% if not forloop.last %}, {% endif %}
+                  <strong class="text-muted">{{ genre.name }}</a>{% if not forloop.last %}, {% endif %}
                 {% empty %}
                   <em>Не вказано</em>
                 {% endfor %}
@@ -49,7 +49,7 @@
                   <p class="mb-1"><strong>Вікові обмеження: </strong>{{ book.age_restrictions }}+</p>
                   <p class="mb-1"><strong>Жанри:</strong>
                     {% for genre in book.genre.all %}
-                      <a href="{% url 'genre_books' genre.pk %}" class = "text-muted">{{ genre.name }}</a>{% if not forloop.last %}, {% endif %}
+                      <strong class = "text-muted">{{ genre.name }}</strong>{% if not forloop.last %}, {% endif %}
                     {% empty %}
                       <em>Не вказано</em>
                     {% endfor %}

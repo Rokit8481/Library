@@ -14,7 +14,7 @@
                     <h2 class="mb-3"><i>"{{ book.title }}"</i></h2>
                     <p class="fs-5"><strong>Автор: </strong> <a href="{% url 'author_detail' book.author.pk %}">{{ book.author.first_name }} {{ book.author.last_name }}</a></p>
                     <p class="fs-5"><strong>ISBN:</strong> {{ book.isbn }}</p>
-                    <p class="fs-5"><strong>Випущена:</strong> {{ book.year_published }} рік</p>
+                    <p class="fs-5"><strong>Випущена:</strong> {{ book.year_published }} р.</p>
                     <p class="fs-5"><strong>Вікові обмеження:</strong> {{ book.age_restrictions }}+</p>
 
                     {% if book.available %}
@@ -25,7 +25,7 @@
 
                     <p class="fs-5"><strong>Жанри:</strong>
                         {% for genre in book.genre.all %}
-                            <a href="{% url 'genre_books' genre.pk %}" class="text-muted">{{ genre.name }}</a>{% if not forloop.last %}, {% endif %}
+                            <strong class="text-muted">{{ genre.name }}</strong>{% if not forloop.last %}, {% endif %}
                         {% empty %}
                             <em>Не вказано</em>
                         {% endfor %}

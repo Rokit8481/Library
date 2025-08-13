@@ -3,8 +3,8 @@
 {% block title %}Мої Книги{% endblock %}
 
 {% block content %}
-<h1 class="text-center">Мої Взяття Книг</h1>
-<div class="container">
+<h1 class="text-center">Мої Взяті Книг</h1>
+<div class="container col-md-9 col-lg-8">
     <ul class="list-group">
         {% for borrow in borrows %}
             <li class="list-group-item">
@@ -19,10 +19,16 @@
                 {% else %}
                     <span class="text-success">{{ borrow.days_left }} {{ borrow.days_left_word }}</span>
                 {% endif %}
-                <form action="{% url 'cancel_borrow' borrow.pk %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-success btn-sm">Скасувати бронювання</button>
-                </form>
+                <div class="d-flex justify-content-between ">
+                    <form action="{% url 'edit_borrow' borrow.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-success btn-sm">Редагувати бронювання</button>
+                    </form>
+                    <form action="{% url 'cancel_borrow' borrow.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-success btn-sm">Скасувати бронювання</button>
+                    </form>
+                </div>
             </li>
         {% empty %}
             <li class="list-group-item">У вас немає взятих книг.</li>
